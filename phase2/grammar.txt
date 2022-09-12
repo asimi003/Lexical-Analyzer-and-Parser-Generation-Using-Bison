@@ -1,0 +1,40 @@
+P -> functions 
+functions -> fx functions | epsilon 
+fx -> FUNCTION id SEMICOLON BEGIN_PARAMS decs END_PARAMS BEGIN_LOCALS decs END_LOCALS BEGIN_BODY statements END_BODY 
+
+decs -> dec SEMICOLON decs | epsilon 
+dec -> ids COLON INTEGER | ids COLON ARRAY L_SQUARE_BRACKET number R_SQUARE_BRACKET OF INTEGER 
+
+ids -> id | id COMMA ids 
+number -> NUMBER 
+id -> IDENT 
+
+statements -> statement SEMICOLON statements | statement SEMICOLON 
+statement -> st_return | st_continue | st_write | st_read | st_while | st_break | st_if | st_var | st_do | st_for
+
+st_return -> RETURN expression 
+st_break -> BREAK 
+st_continue -> CONTINUE 
+st_write -> WRITE x 
+st_read -> READ x 
+st_while -> WHILE bool_exp BEGIN_LOOP statements END_LOOP 
+st_if -> IF bool_exp THEN statements ENDIF
+st_do -> DO BEGIN_LOOP statements END_LOOP 
+st_for -> FOR x ASSIGN number SEMICOLON bool_exp SEMICOLON x ASSIGN expression BEGIN_LOOP statements END_LOOP 
+
+bool_exp -> relation_exps | bool_exp OR relation-exps 
+relation_exps -> relation_exps AND relation_exp | relation_exp 
+relation_exp -> exp_comp | NOT exp_comp | TRUE | FALSE | L_PAREN bool_exp R_PAREN
+exp_comp -> expression comp expression 
+comp -> EQ | NEQ | GT | LTE | GTE 
+
+var -> x ASSIGN expression 
+x -> id | id L_SQUARE_BRACKET expression R_SQUARE_BRACKET | id L_SQUARE_BRACKET expression R_SQUARE_BRACKET L_SQUARE_BRACKET expression R_SQUARE_BRACKET 
+
+expression -> multiplicative_expr add_sub_expr 
+multiplicative_expr -> term | term MULT multiplicative_expr | term DIV multiplicative_expr | term MOD multiplicative_expr 
+add_sub_expr -> ADD expression | SUB expression | epsilon 
+term -> x | 
+| L_PAREN expression R_PAREN | id L_PAREN expression exp_loop R_PAREN 
+exp_loop -> COMMA expression exp_loop | epsilon 
+number -> NUMBER

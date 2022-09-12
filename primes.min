@@ -1,0 +1,56 @@
+
+function main;
+beginparams
+endparams
+
+beginlocals
+
+n : integer;
+a : array[1000] of integer;	
+i : integer;
+j : integer;
+x : integer;
+sqrt_n : integer;
+
+endlocals
+
+beginbody	
+
+    read n;
+    x := n;
+    while x > n / x beginloop
+	    x := (x+n / x) / 2;
+    endloop;
+    sqrt_n := x;
+
+    ## initialization of the array
+    i := 2;
+    while i <= n beginloop
+	    a[i] := 0;
+	    i := i + 1;
+    endloop;
+
+
+    i := 2;
+    while i <= sqrt_n beginloop
+	    if a[i] == 0 then
+          ## i prime, so eliminate its multiples
+	       j := i+i;
+	       while j <= n beginloop
+		       a[j] := 1;
+		       j := j+i;
+	       endloop;
+       endif;
+       i := i + 1;
+    endloop;
+
+  
+    i := 2;
+    while i <= n beginloop
+	    if a[i] == 0 then
+	       write i;
+       endif;
+       i := i + 1;
+   endloop;
+endbody
+
